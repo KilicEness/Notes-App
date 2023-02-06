@@ -29,20 +29,21 @@ const renderNotes = function (notes, filters) {
     })
 }
 
+renderNotes(notes, filters)
+
 //create new note
 document.querySelector('#create-note').addEventListener('click', function (e) {
     e.target.textContent = 'The button was clicked'
-})
-
-//remove note
-document.querySelector('#remove-all').addEventListener('click', function (e) {
-    document.querySelectorAll('.note').forEach(function (note) {
-        note.remove()
-    })
 })
 
 //search filter
 document.querySelector('#search-text').addEventListener('input', function (e) {
     filters.searchText = e.target.value
     renderNotes(notes, filters)
+})
+
+document.querySelector('#name-form').addEventListener('submit', function(e){
+    e.preventDefault()
+    console.log(e.target.elements.firstName.value)
+    e.target.elements.firstName.value = ''
 })
