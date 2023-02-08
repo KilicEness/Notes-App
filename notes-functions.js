@@ -28,7 +28,7 @@ const removeNote = function (id) {
 // Generate the DOM structure for a note
 const generateNoteDOM = function (note) {
     const noteEl = document.createElement('div')
-    const textEl = document.createElement('span')
+    const textEl = document.createElement('a')
     const button = document.createElement('button')
 
     // Setup the remove note button
@@ -46,9 +46,25 @@ const generateNoteDOM = function (note) {
     } else {
         textEl.textContent = 'Unnamed note'
     }
+    textEl.setAttribute('href', `./edit.html#${note.id}`)
     noteEl.appendChild(textEl)
 
     return noteEl
+}
+
+//Sort your notes alphabetically
+const sortNotes = function (notes, sortBy) {
+    if (sortBy === 'alphabetical') {
+        return notes.sort(function (a, b) {
+            if (a.title.toLowerCase() < b.title.toLowerCase()){
+                return -1
+            }else if (a.title.toLowerCase() > b.title.toLowerCase()){
+                return 1
+            }else {
+                return 0
+            }
+        })
+    }
 }
 
 // Render application notes
@@ -64,7 +80,6 @@ const renderNotes = function (notes, filters) {
         document.querySelector('#notes').appendChild(noteEl)
     })
 }
-
 //uuid random id function
 const uuidv4 = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
