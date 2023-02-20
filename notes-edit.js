@@ -5,7 +5,7 @@ const bodyElement = document.querySelector('#note-body')
 const removeElement = document.querySelector('#remove-note')
 const noteId = location.hash.substring(1)
 let notes = getSavedNotes()
-let note = notes.find( (note) => {
+let note = notes.find((note) => {
     return note.id === noteId
 })
 

@@ -10,7 +10,7 @@ renderNotes(notes, filters)
 
 document.querySelector('#create-note').addEventListener('click', (e) => {
     const id = uuidv4()
-    
+
     notes.push({
         id: id,
         title: '',

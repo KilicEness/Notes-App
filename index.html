@@ -3,18 +3,30 @@
 
 <head>
     <title>Notes App</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1>Hello Notes App</h1>
-    <h2>Take notes and never forget</h2>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">Hello Notes App</h1>
+            <h2 class="header__subtitle">Take notes and never forget</h2>
+        </div>
+    </header>
+    <div class="actions">
+        <div class="actions__container">
+            <input id="search-text" type="text" class="input" placeholder="filter notes">
+            <select id="filter-by" class="dropdown">
+                <option value="alphabetical">Sort by alphabetical</option>
+            </select>
+        </div>
+    </div>
 
-    <input id="search-text" type="text" placeholder="filter notes">
-    <select id="filter-by">
-        <option value="alphabetical">Sort by alphabetical</option>
-    </select>
-    <div id="notes"></div>
-    <button id="create-note">Create Note</button>
+    <div class="container">
+        <div id="notes"></div>
+        <button id="create-note" class="button">Create Note</button>
+    </div>
+
     <script src="notes-functions.js"></script>
     <script src="notes--app.js"></script>
 </body>

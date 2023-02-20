@@ -17,7 +17,7 @@ const saveNotes = (notes) => {
 
 // Remove a note from the list
 const removeNote = (id) => {
-    const noteIndex = notes.findIndex( (note) => note.id === id)
+    const noteIndex = notes.findIndex((note) => note.id === id)
 
     if (noteIndex > -1) {
         notes.splice(noteIndex, 1)
@@ -26,18 +26,8 @@ const removeNote = (id) => {
 
 // Generate the DOM structure for a note
 const generateNoteDOM = (note) => {
-    const noteEl = document.createElement('div')
-    const textEl = document.createElement('a')
-    const button = document.createElement('button')
-
-    // Setup the remove note button
-    button.textContent = 'x'
-    noteEl.appendChild(button)
-    button.addEventListener('click', () => {
-        removeNote(note.id)
-        saveNotes(notes)
-        renderNotes(notes, filters)
-    })
+    const noteEl = document.createElement('a')
+    const textEl = document.createElement('p')
 
     // Setup the note title text
     if (note.title.length > 0) {
@@ -45,8 +35,12 @@ const generateNoteDOM = (note) => {
     } else {
         textEl.textContent = 'Unnamed note'
     }
-    textEl.setAttribute('href', `./edit.html#${note.id}`)
+    textEl.classList.add('list-item__title')
     noteEl.appendChild(textEl)
+
+    //Setup the link
+    noteEl.setAttribute('href', `./edit.html#${note.id}`)
+    noteEl.classList.add('list-item')
 
     return noteEl
 }
@@ -54,12 +48,12 @@ const generateNoteDOM = (note) => {
 //Sort your notes alphabetically
 const sortNotes = (notes, sortBy) => {
     if (sortBy === 'alphabetical') {
-        return notes.sort( (a, b) => {
-            if (a.title.toLowerCase() < b.title.toLowerCase()){
+        return notes.sort((a, b) => {
+            if (a.title.toLowerCase() < b.title.toLowerCase()) {
                 return -1
-            }else if (a.title.toLowerCase() > b.title.toLowerCase()){
+            } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
                 return 1
-            }else {
+            } else {
                 return 0
             }
         })
@@ -68,14 +62,22 @@ const sortNotes = (notes, sortBy) => {
 
 // Render application notes
 const renderNotes = (notes, filters) => {
-    const filteredNotes = notes.filter( (note) => note.title.toLowerCase().includes(filters.searchText.toLowerCase()))
+    const notesEl = document.querySelector('#notes')
+    const filteredNotes = notes.filter((note) => note.title.toLowerCase().includes(filters.searchText.toLowerCase()))
+    notesEl.innerHTML = ''
 
-    document.querySelector('#notes').innerHTML = ''
+    if (filteredNotes.length > 0) {
+        filteredNotes.forEach((note) => {
+            const noteEl = generateNoteDOM(note)
+            notesEl.appendChild(noteEl)
+        })
+    } else {
+        const emptyMessage = document.createElement('p')
+        emptyMessage.textContent = 'No notes to show'
+        emptyMessage.classList.add('empty-message')
+        notesEl.appendChild(emptyMessage)
+    }
 
-    filteredNotes.forEach( (note) => {
-        const noteEl = generateNoteDOM(note)
-        document.querySelector('#notes').appendChild(noteEl)
-    })
 }
 //uuid random id function
 const uuidv4 = () => {
